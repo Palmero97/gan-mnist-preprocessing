@@ -4,8 +4,9 @@
 This module contains the following data transformers:
     - IdTransfomer
     - InvColorTransformer
-    - PCATranfomer
-    - NoisyPcaTransformer
+    - ImgPcaTransformer
+    - ProjectedPcaTransformer
+    - NoisyProjectedPcaTransformer
 """
 
 import numpy as np
@@ -14,7 +15,7 @@ from sklearn.decomposition import PCA
 
 class IdTransformer:
     """
-    Id transformer.
+    Applies identity transformation.
     """
 
     def transform(self, x):
@@ -23,7 +24,7 @@ class IdTransformer:
 
 class InvColorTransformer:
     """
-    Inverse color of greyscale img transformer.
+    Applies color inversion to greyscale images.
     """
 
     def transform(self, x):
@@ -33,7 +34,7 @@ class InvColorTransformer:
 class ImgPcaTransformer:
     """
     Applies PCA decomposition and projects the input instances into the
-    reduced feature space. It is adapted for square images.
+    reduced feature space. It is adapted for squared images.
     """
 
     def __init__(self, h):
@@ -68,7 +69,7 @@ class ImgPcaTransformer:
 class ProjectedPcaTransformer:
     """
     Applies PCA decomposition, projects the input instances into the
-    reduced feature space, and then they are projected back to the original
+    reduced feature space. Then, they are projected back to the original
     space.
     """
 
@@ -102,9 +103,8 @@ class ProjectedPcaTransformer:
 
 class NoisyProjectedPcaTransformer(ProjectedPcaTransformer):
     """
-    Applies PCA transformer, projects the input instances into the
-    reduced feature space, then they are projected into the original space
-    and then adds gaussian noise to those projected instances.
+    Applies PCA transformer. Then, gaussian noise is added to those 
+    projected instances.
     """
 
     def __init__(self, n_components, noise_factor):
